@@ -72,9 +72,8 @@ def main(src, dst, txt_file, nb=-1):
 
 
 if __name__ == '__main__':
-    # folders = [('s1', 2), ('s2', 2), ('s2_01', 1), ('s2-mask', 2), ('s2-mask_01', 1)]
-    folders = [('s2_01', 1), ('s2-mask', 2), ('s2-mask_01', 1)]
-    txt_file = 'have_to_add.txt'
+    folders = [('s1', 2), ('s2', 2), ('s2_01', 1), ('s2-mask', 2), ('s2-mask_01', 1)]
+    txt_file = 'names_on_drive.txt'
     for folder, nb in folders:
         if '01' in folder:
             src = os.path.join('assignment-2023', folder[:-3])

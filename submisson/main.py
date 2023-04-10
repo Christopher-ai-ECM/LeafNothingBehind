@@ -1,12 +1,14 @@
 import argparse
 
 from train import train
+from test import test
 
 
 def main(options):
     if options['mode'] == 'train':
         train()
-    pass
+    if options['mode'] == 'infer':
+        test(options['csv_path'], options['save_infers_under'])
 
 
 if __name__ == "__main__":

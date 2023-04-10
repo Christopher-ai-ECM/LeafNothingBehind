@@ -55,9 +55,9 @@ class DataGenerator(Dataset):
 
 
         moy = normalize_s2(torch.tensor(moyenne(s2_0, s2_1, mask_0, mask_1))).unsqueeze(0)
-        s1=normalize_s1(torch.tensor(s1)) 
-        s2_2=normalize_s2(torch.tensor(s2_2).unsqueeze(0)) 
-        s2_1=normalize_s2(torch.tensor(s2_1).unsqueeze(0)) 
+        s1=normalize_s1(s1.clone().detach()) 
+        s2_2=normalize_s2(s2_2.clone().detach().unsqueeze(0)) 
+        s2_1=normalize_s2(s2_1.clone().detach().unsqueeze(0)) 
         difference=s2_2-moy
 
         merged_tensor = torch.cat((moy, s1), dim=0)
@@ -83,3 +83,8 @@ def create_generators():
     test_loader = DataLoader(DataGenerator(test_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)
     return train_loader, val_loader, test_loader
 
+
+if __name__ == "__main__":
+    train, _, _ = create_generators()
+    X, Y = next(iter(train))
+    print(X)

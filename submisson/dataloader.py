@@ -78,8 +78,8 @@ def data_split(names):
 def create_generators():
     names = os.listdir(PARAM.S2_PATH)
     train_data, val_data, test_data = data_split(names)
-    train_loader = DataLoader(DataGenerator(train_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA,drop_last=True)
-    val_loader = DataLoader(DataGenerator(val_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA,drop_last=True)
-    test_loader = DataLoader(DataGenerator(test_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA,drop_last=True)
+    train_loader = DataLoader(DataGenerator(train_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)
+    val_loader = DataLoader(DataGenerator(val_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)
+    test_loader = DataLoader(DataGenerator(test_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)
     return train_loader, val_loader, test_loader
 

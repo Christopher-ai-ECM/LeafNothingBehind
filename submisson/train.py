@@ -14,9 +14,6 @@ from dataloader import create_generators
 seed = 123
 torch.manual_seed(seed)
 
-model = UNet(input_channels=3, output_classes=1, hidden_channels=16, dropout_probability=0)
-
-train_generator, val_generator, _ = create_generators()
 
 def train():
     
@@ -27,11 +24,14 @@ def train():
         device = torch.device("cpu")
     print('device:', device)
 
+    train_generator, val_generator, _ = create_generators()
+    model = UNet(input_channels=3, output_classes=1, hidden_channels=PARAM.HIDDEN_CHANNELS, dropout_probability=PARAM.DROPOUT)
+
     model.to(device)
     # summary(model, input_size=(3, 256, 256))
 
     # Loss
-    criterion = MSE([8, 9,11]) #on rajoute la neige aussi
+    criterion = MSE([8, 9, 11]) #on rajoute la neige aussi
     #criterion = nn.MSELoss()
     # Loss
     #criterion = nn.SmoothL1Loss() #on utilise la SmoothL1Loss qui est comme mean-squarred error mais en mieux

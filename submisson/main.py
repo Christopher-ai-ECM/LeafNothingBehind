@@ -1,7 +1,11 @@
 import argparse
 
+from train import train
+
 
 def main(options):
+    if options['mode'] == 'train':
+        train()
     pass
 
 

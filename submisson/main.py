@@ -9,7 +9,7 @@ def main(options):
         train()
     if options['mode'] == 'infer':
         test(options['csv_path'], options['save_infers_under'])
-
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

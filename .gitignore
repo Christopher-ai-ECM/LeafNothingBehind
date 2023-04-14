@@ -1,7 +1,5 @@
-s1/
-s2/
-s2_01/
-s2-mask/
-s2-mask_01/
+data/s1/
+data/s2/
+data/s2-mask/
 new_assignment-2023
 __pycache__

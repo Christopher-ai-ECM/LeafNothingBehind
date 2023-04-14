@@ -8,7 +8,7 @@ membres de l'équipe:
 
 # Contenu
 
-# Submission
+## Submission
 
 Dossier à rendre à Jules. Contient:
 - dossier `checkpoint` avec le ou les poids du model
@@ -20,6 +20,9 @@ Dossier à rendre à Jules. Contient:
 - le fichier `requirements.txt` contenant l'ensemble des packages utilisés ainsi que leur version
 - le fichier package GDAL
 
+## test_submission
+
+dossier dans lequel on teste pour voir si la submission marche. Elle contient des donnes de tests
 
 ## Dans le utils
 - `names_on_drive.txt`: listes des noms des fichiers s2 (au temps $t$) qui sont sur le drive. *last update: 7 avril*

@@ -118,7 +118,8 @@ class Predict_DataGenerator(Dataset):
         X = merged_tensor #shape(3,256,256)
         # Y = torch.cat((difference, mask_2.unsqueeze(0)),dim=0) #s2_2 avant 
         Y = moy
-        return X, Y
+        s2_name = self.names[index][-1]
+        return X, Y, s2_name
 
 
 def data_split(names):
@@ -148,8 +149,6 @@ def read_csv(csv_path):
 def create_predict_generateur(csv_path):
     names = read_csv(csv_path)
     data_path = os.path.dirname(csv_path)
-    print(names)
-    print(data_path)
     predict = DataLoader(Predict_DataGenerator(names, data_path), batch_size=1, shuffle=False, drop_last=False)
     return predict
 

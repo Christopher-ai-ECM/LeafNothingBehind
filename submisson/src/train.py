@@ -59,10 +59,10 @@ def train():
       
       for (X, Y) in train_range:
           X = X.to(torch.float).to(device)
-          Y,Ybis = Y[:,0,:,:].to(torch.float).to(device),Y[:,1,:,:].to(torch.float).to(device) 
+          Y, Ybis = Y[:,0,:,:].to(torch.float).to(device), Y[:,1,:,:].to(torch.float).to(device) 
           optimizer.zero_grad()
           S2_pred = model(X)
-          loss = criterion(S2_pred, Y,Ybis) 
+          loss = criterion(S2_pred, Y, Ybis) 
           loss.backward()
           optimizer.step()
           train_loss.append(loss.item())

@@ -6,8 +6,8 @@ import torch
 
 import parameter as PARAM
 
-from model import UNet
-from dataloader import create_predict_generateur
+from src.model import UNet
+from src.dataloader import create_predict_generateur
 
 
 def test(csv_path, save_infers_under):

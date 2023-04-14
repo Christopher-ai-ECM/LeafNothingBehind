@@ -4,8 +4,8 @@ from osgeo import gdal
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-from utils import find_previous, normalize_s1, normalize_s2, moyenne
-import parameter as PARAM
+from src.utils import find_previous, normalize_s1, normalize_s2, moyenne
+import src.parameter as PARAM
 
 np.random.seed(0)
 

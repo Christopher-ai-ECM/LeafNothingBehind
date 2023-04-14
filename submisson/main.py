@@ -1,7 +1,7 @@
 import argparse
 
-from train import train
-from test import test
+from src.train import train
+from src.test import test
 
 
 def main(options):

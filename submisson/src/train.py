@@ -4,11 +4,11 @@ from tqdm import tqdm
 
 import torch
 
-import parameter as PARAM
+import src.parameter as PARAM
 
-from loss import MSE
-from model import UNet
-from dataloader import create_generators
+from src.loss import MSE
+from src.model import UNet
+from src.dataloader import create_generators
 
 # Fix seed for reproducibility
 seed = 123

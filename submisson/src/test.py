@@ -4,7 +4,7 @@ import pickle
 
 import torch
 
-import parameter as PARAM
+import src.parameter as PARAM
 
 from src.model import UNet
 from src.dataloader import create_predict_generateur
@@ -32,9 +32,10 @@ def test(csv_path, save_infers_under):
     results = {"outputs": [], "paths": []}
 
     for i, data in enumerate(loader):
+        print(i)
         if i == number_of_batches:
             break
-        results["paths"] += list(data["paths"][-1])
+        # results["paths"] += list(data["paths"][-1]) #TODO: ajouter les chemins des images
         results["outputs"].append(model(data).detach().cpu().numpy())
         if i % 10 == 9 or i+1 == number_of_batches:
             print(f"Performed batch {i+1}/{number_of_batches}")

@@ -25,7 +25,7 @@ Dossier à rendre à Jules. Contient:
 dossier dans lequel on teste pour voir si la submission marche. Elle contient des donnes de tests.
 Pour tester la sublission, faite:
 ```bash
-python main.py --mode infer --csv_path ..\test_submission\test_data_csv --save_infers_under ..\result
+python main.py --mode infer --csv_path ..\test_submission\test_data.csv --save_infers_under ..\result
 ```
 
 ## Dans le utils

@@ -69,29 +69,29 @@ class DataGenerator(Dataset):
 
 
 class Predict_DataGenerator(Dataset):
-    def __init__(self, names):
+    def __init__(self, names, path):
         """
         names[i] = [nom de l'image i au temps 0, nom de l'image i au temps 1, nom de l'image i au temps 2]
         """
         self.names = names
+        self.path = path
+        self.s1 = os.path.join(path, 's1')
+        self.s2 = os.path.join(path, 's2')
+        self.mask = os.path.join(path, 's2-mask')
     
     def __len__(self):
         return len(self.names)
       
     def __getitem__(self, index):
-        S1_PATH = os.path.join('data', 's1')
-        S2_PATH = os.path.join('data', 's2')
-        MASK_PATH = os.path.join('data', 's2-mask')
-
         name_0, name_1, name_2 = self.names[index]
 
-        s2_0_path = os.path.join(S2_PATH, name_0)
-        s2_1_path = os.path.join(S2_PATH, name_1)
+        s2_0_path = os.path.join(self.s2, name_0)
+        s2_1_path = os.path.join(self.s2, name_1)
 
-        s1_path = os.path.join(S1_PATH, name_2[:-1])
+        s1_path = os.path.join(self.s1, name_2)
 
-        mask_0_path = os.path.join(MASK_PATH, name_0)
-        mask_1_path = os.path.join(MASK_PATH, name_1)
+        mask_0_path = os.path.join(self.mask, name_0)
+        mask_1_path = os.path.join(self.mask, name_1)
         
         try:
           mask_0 = torch.tensor(gdal.Open(mask_0_path).ReadAsArray())
@@ -147,8 +147,10 @@ def read_csv(csv_path):
 
 def create_predict_generateur(csv_path):
     names = read_csv(csv_path)
+    data_path = os.path.dirname(csv_path)
     print(names)
-    predict = DataLoader(Predict_DataGenerator(names), batch_size=1, shuffle=False, drop_last=False)
+    print(data_path)
+    predict = DataLoader(Predict_DataGenerator(names, data_path), batch_size=1, shuffle=False, drop_last=False)
     return predict
 
 

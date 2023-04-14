@@ -22,7 +22,11 @@ Dossier à rendre à Jules. Contient:
 
 ## test_submission
 
-dossier dans lequel on teste pour voir si la submission marche. Elle contient des donnes de tests
+dossier dans lequel on teste pour voir si la submission marche. Elle contient des donnes de tests.
+Pour tester la sublission, faite:
+```bash
+python main.py --mode infer --csv_path ..\test_submission\test_data_csv --save_infers_under ..\result
+```
 
 ## Dans le utils
 - `names_on_drive.txt`: listes des noms des fichiers s2 (au temps $t$) qui sont sur le drive. *last update: 7 avril*

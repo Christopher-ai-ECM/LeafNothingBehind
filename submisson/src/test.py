@@ -45,8 +45,8 @@ def test(csv_path, save_infers_under):
             print(f"Performed batch {i+1}/{number_of_batches}")
 
     results["outputs"] = np.concatenate(results["outputs"], axis=0)
-    # save_path = os.path.join(save_infers_under, csv_path)
-    save_path = save_infers_under
+    csv_name = os.path.basename(os.path.normpath(csv_path)).split('.')[0]
+    save_path = os.path.join(save_infers_under, csv_name)
     os.makedirs(save_path, exist_ok=True)
     with open(os.path.join(save_path, "results.pickle"), 'wb') as file:
         pickle.dump(results, file)

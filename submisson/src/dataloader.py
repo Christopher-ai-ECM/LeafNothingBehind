@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from osgeo import gdal
+from skimage import io
 import torch
 from torch.utils.data import Dataset, DataLoader
 
@@ -35,24 +35,42 @@ class DataGenerator(Dataset):
         
 
         try:
-          mask_0 = torch.tensor(gdal.Open(mask_0_path).ReadAsArray())
+          # mask_0 = torch.tensor(gdal.Open(mask_0_path).ReadAsArray())
+          mask_0 = load_image(mask_0_path)
         except:
           mask_0 =  torch.zeros(256, 256)
         try:
-          mask_1 = torch.tensor(gdal.Open(mask_1_path).ReadAsArray())
+          # mask_1 = torch.tensor(gdal.Open(mask_1_path).ReadAsArray())
+          mask_1 = load_image(mask_1_path)
         except:
           mask_1 =  torch.zeros(256, 256)
         try:
-          mask_2 = torch.tensor(gdal.Open(mask_2_path).ReadAsArray())
+          # mask_2 = torch.tensor(gdal.Open(mask_2_path).ReadAsArray())
+          mask_2 = load_image(mask_2_path)
         except:
           mask_2 =  torch.zeros(256, 256)
 
        
-        s1 = torch.tensor(gdal.Open(s1_path).ReadAsArray())
-        s2_0 = torch.tensor(gdal.Open(s2_0_path).ReadAsArray())
-        s2_1 = torch.tensor(gdal.Open(s2_1_path).ReadAsArray())
-        s2_2 = torch.tensor(gdal.Open(s2_2_path).ReadAsArray())
+        # s1 = torch.tensor(gdal.Open(s1_path).ReadAsArray())
+        # s2_0 = torch.tensor(gdal.Open(s2_0_path).ReadAsArray())
+        # s2_1 = torch.tensor(gdal.Open(s2_1_path).ReadAsArray())
+        # s2_2 = torch.tensor(gdal.Open(s2_2_path).ReadAsArray())
+        # print('gdal')
+        # print(f'{s1.shape = }')
+        # print(f'{s2_0.shape = }')
+        # print(f'{s2_1.shape = }')
+        # print(f'{s2_2.shape = }')
+        # print(s1[0,1])
 
+        s1 = load_image(s1_path)
+        s2_0 = load_image(s2_0_path)
+        s2_1 = load_image(s2_1_path)
+        s2_2 = load_image(s2_2_path)
+        # print('io')
+        # print(f'{s1.shape = }')
+        # print(f'{s2_0.shape = }')
+        # print(f'{s2_1.shape = }')
+        # print(f'{s2_2.shape = }')
 
         moy = normalize_s2(torch.tensor(moyenne(s2_0, s2_1, mask_0, mask_1))).unsqueeze(0)
         s1=normalize_s1(s1.clone().detach()) 
@@ -94,17 +112,20 @@ class Predict_DataGenerator(Dataset):
         mask_1_path = os.path.join(self.mask, name_1)
         
         try:
-          mask_0 = torch.tensor(gdal.Open(mask_0_path).ReadAsArray())
+          mask_0 = load_image(mask_0_path)
         except:
           mask_0 =  torch.zeros(256, 256)
         try:
-          mask_1 = torch.tensor(gdal.Open(mask_1_path).ReadAsArray())
+          mask_1 = load_image(mask_1_path)
         except:
           mask_1 =  torch.zeros(256, 256)
        
-        s1 = torch.tensor(gdal.Open(s1_path).ReadAsArray())
-        s2_0 = torch.tensor(gdal.Open(s2_0_path).ReadAsArray())
-        s2_1 = torch.tensor(gdal.Open(s2_1_path).ReadAsArray())
+        # s1 = torch.tensor(gdal.Open(s1_path).ReadAsArray())
+        # s2_0 = torch.tensor(gdal.Open(s2_0_path).ReadAsArray())
+        # s2_1 = torch.tensor(gdal.Open(s2_1_path).ReadAsArray())
+        s1 = load_image(s1_path)
+        s2_0 = load_image(s2_0_path)
+        s2_1 = load_image(s2_1_path)
 
         moy = normalize_s2(torch.tensor(moyenne(s2_0, s2_1, mask_0, mask_1))).unsqueeze(0)
         s1=normalize_s1(s1.clone().detach()) 
@@ -153,11 +174,18 @@ def create_predict_generateur(csv_path):
     return predict
 
 
-if __name__ == "__main__":
-    # train, _, _ = create_generators()
-    # X, Y = next(iter(train))
-    # print(X)
+def load_image(path):
+    image = io.imread(path)
+    if len(image.shape) == 3:
+        image = np.moveaxis(image, -1, 0)
+    return torch.from_numpy(image)
 
-    pred = create_predict_generateur('..\\data\\image_series.csv')
-    X, Y = next(iter(pred))
-    print(X)
+
+if __name__ == "__main__":
+    train, _, _ = create_generators()
+    X, Y = next(iter(train))
+    print(X.shape)
+
+    # pred = create_predict_generateur('..\\test_submission\\data\\test_data.csv')
+    # X, Y = next(iter(pred))
+    # print(X)

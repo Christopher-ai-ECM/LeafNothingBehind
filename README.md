@@ -18,7 +18,6 @@ Dossier à rendre à Jules. Contient:
   - `csv_path`: we will use this argument to give your code the path to the CSV file for the test data. Those CSV files will obey the same format as the train dataset, and the folder structure of the dataset will also be the same
   - `save_infers_under`: we will use this argument to give your code the path to the folder where to save the results.
 - le fichier `requirements.txt` contenant l'ensemble des packages utilisés ainsi que leur version
-- le fichier package GDAL
 
 ## test_submission
 

@@ -1,4 +1,5 @@
 import os
+import csv
 import numpy as np
 from skimage import io
 import torch
@@ -160,11 +161,9 @@ def create_generators():
 
 
 def read_csv(csv_path):
-    names = []
-    f = open(csv_path, "r")
-    for line in f:
-        names.append(line.split(','))
-    return names[1:]
+    with open(csv_path) as path_list:
+      data_paths = [[os.path.basename(path) for path in row] for row in csv.reader(path_list, delimiter=",")][1:]
+    return data_paths
 
 
 def create_predict_generateur(csv_path):

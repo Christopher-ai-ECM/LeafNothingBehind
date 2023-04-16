@@ -14,7 +14,7 @@ rm -rf "$TEST_FOLDER"
 mkdir "$TEST_FOLDER"
 unzip -q "$3" -d "$TEST_FOLDER"
 cd $TEST_FOLDER
-
+ls
 
 # Check if main.py and requirements.txt exist
 if [ -f "main.py" ] && [ -f "requirements.txt" ] && [ ! -f "infer.sh" ]; then

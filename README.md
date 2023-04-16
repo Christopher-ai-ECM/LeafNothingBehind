@@ -23,10 +23,16 @@ Dossier à rendre à Jules. Contient:
 ## test_submission
 
 dossier dans lequel on teste pour voir si la submission marche. Elle contient des donnes de tests.
-Pour tester la sublission, faite:
+Pour tester la submission avec python, faites:
 ```bash
 python main.py --mode infer --csv_path ..\test_submission\test_data.csv --save_infers_under ..\test_submission\result
 ```
+
+Pour tester la submission avec le script bash, faites:
+```bash
+bash server_script.sh ../test_submission/test_data.csv ../test_submission/result submission_16_april.zip
+```
+
 
 ## Dans le utils
 - `names_on_drive.txt`: listes des noms des fichiers s2 (au temps $t$) qui sont sur le drive. *last update: 16 avril*

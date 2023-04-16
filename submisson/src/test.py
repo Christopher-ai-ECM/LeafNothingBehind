@@ -44,7 +44,7 @@ def test(csv_path, save_infers_under):
         if i % 10 == 9 or i + 1 == number_of_batches:
             print(f"Performed batch {i+1}/{number_of_batches}")
 
-    results["outputs"] = np.concatenate(results["outputs"], axis=0) # shape final: (nb_images, 256, 256, 1)
+    results["outputs"] = np.expand_dims(np.concatenate(results["outputs"], axis=0), axis=-1)
     csv_name = os.path.basename(os.path.normpath(csv_path)).split('.')[0]
     save_path = os.path.join(save_infers_under, csv_name)
     os.makedirs(save_path, exist_ok=True)

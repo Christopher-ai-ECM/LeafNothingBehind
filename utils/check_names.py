@@ -4,8 +4,6 @@ compare le nom des images de new_assigment-2023 avec le dossier image_series.csv
 
 import os
 
-path = '..\\new_assignment-2023\\s2'
-
 
 def get_name_from_csv(csv_path):
     """
@@ -34,6 +32,13 @@ def differance(csv_names, s2_names):
     return names
 
 
+def write_diff_names(diff_names, file_name):
+    f = open(file_name, "w")
+    for name in diff_names:
+        f.write(name + "\n")
+    f.close()
+
+
 if __name__ == "__main__":
     csv_path = '..\\data\\image_series.csv'
     s2_path = '..\\new_assignment-2023\\s2'
@@ -42,4 +47,5 @@ if __name__ == "__main__":
     diff_names = differance(csv_names, s2_names)
     print(diff_names)
     print(len(diff_names))
+    write_diff_names(diff_names, "names_not_on_csv.txt")
 

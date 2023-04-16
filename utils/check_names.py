@@ -3,6 +3,7 @@ compare le nom des images de new_assigment-2023 avec le dossier image_series.csv
 """
 
 import os
+import numpy as np
 
 
 def get_name_from_csv(csv_path):
@@ -32,11 +33,34 @@ def differance(csv_names, s2_names):
     return names
 
 
-def write_diff_names(diff_names, file_name):
-    f = open(file_name, "w")
-    for name in diff_names:
+def intersection(csv_names, s2_names):
+    """
+    renvoie la liste des noms qui se trouve à la fois dans csv_name et dans s2_names
+    """
+    names = list(filter(lambda x: x in csv_names, s2_names))
+    return names
+
+
+def write(names, file):
+    """
+    écrit les noms des images (names) dans file
+    """
+    f = open(file, "w")
+    for name in names:
         f.write(name + "\n")
     f.close()
+
+
+def split_data(good_names):
+    np.random.shuffle(good_names)
+    n = len(good_names)
+    split_1 = int(0.8 * n)
+    split_2 = split_1 + int(0.1 * n)
+    train, val, test = good_names[:split_1], good_names[split_1:split_2], good_names[split_2:]
+    print(len(train), len(val), len(test))
+    write(train, 'train.txt')
+    write(val, 'val.txt')
+    write(test, 'test.txt')
 
 
 if __name__ == "__main__":
@@ -44,8 +68,5 @@ if __name__ == "__main__":
     s2_path = '..\\new_assignment-2023\\s2'
     csv_names = get_name_from_csv(csv_path)
     s2_names = get_name_from_s2data(s2_path)
-    diff_names = differance(csv_names, s2_names)
-    print(diff_names)
-    print(len(diff_names))
-    write_diff_names(diff_names, "names_not_on_csv.txt")
-
+    good_names = intersection(csv_names, s2_names)
+    split_data(good_names)

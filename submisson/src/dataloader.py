@@ -51,27 +51,10 @@ class DataGenerator(Dataset):
         except:
           mask_2 =  torch.zeros(256, 256)
 
-       
-        # s1 = torch.tensor(gdal.Open(s1_path).ReadAsArray())
-        # s2_0 = torch.tensor(gdal.Open(s2_0_path).ReadAsArray())
-        # s2_1 = torch.tensor(gdal.Open(s2_1_path).ReadAsArray())
-        # s2_2 = torch.tensor(gdal.Open(s2_2_path).ReadAsArray())
-        # print('gdal')
-        # print(f'{s1.shape = }')
-        # print(f'{s2_0.shape = }')
-        # print(f'{s2_1.shape = }')
-        # print(f'{s2_2.shape = }')
-        # print(s1[0,1])
-
         s1 = load_image(s1_path)
         s2_0 = load_image(s2_0_path)
         s2_1 = load_image(s2_1_path)
         s2_2 = load_image(s2_2_path)
-        # print('io')
-        # print(f'{s1.shape = }')
-        # print(f'{s2_0.shape = }')
-        # print(f'{s2_1.shape = }')
-        # print(f'{s2_2.shape = }')
 
         moy = normalize_s2(torch.tensor(moyenne(s2_0, s2_1, mask_0, mask_1))).unsqueeze(0)
         s1=normalize_s1(s1.clone().detach()) 
@@ -80,7 +63,6 @@ class DataGenerator(Dataset):
         difference=s2_2-moy
 
         merged_tensor = torch.cat((moy, s1), dim=0)
-        #print("shape_mask: ", np.shape(mask_1))
         
         X = merged_tensor #shape(3,256,256)
         Y = torch.cat((difference,mask_2.unsqueeze(0)),dim=0) #s2_2 avant 
@@ -144,16 +126,28 @@ class Predict_DataGenerator(Dataset):
         return X, Y, s2_name
 
 
-def data_split(names):
-    n = len(names)
-    split_1 = int(PARAM.TRAIN_SPLIT * n)
-    split_2 = split_1 + int(PARAM.VAL_SPLIT * n)
-    return names[:split_1], names[split_1: split_2], names[split_2:]
+# def data_split(names):
+#     n = len(names)
+#     split_1 = int(PARAM.TRAIN_SPLIT * n)
+#     split_2 = split_1 + int(PARAM.VAL_SPLIT * n)
+#     return names[:split_1], names[split_1: split_2], names[split_2:]
+
+
+def get_data_names(txt_path):
+  """
+  prend un chemin vers un fichier txt et renvoie la liste des noms des images qui sont dedans
+  """
+  f = open(txt_path, "r")
+  names = [line[:-1] for line in f]
+  return names
 
 
 def create_generators():
-    names = os.listdir(PARAM.S2_PATH)
-    train_data, val_data, test_data = data_split(names)
+    # names = os.listdir(PARAM.S2_PATH)
+    # train_data, val_data, test_data = data_split(names)
+    train_data = get_data_names(os.path.join(PARAM.TXT_PATH, 'train.txt'))
+    val_data = get_data_names(os.path.join(PARAM.TXT_PATH, 'val.txt'))
+    test_data = get_data_names(os.path.join(PARAM.TXT_PATH, 'test.txt'))
     train_loader = DataLoader(DataGenerator(train_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)
     val_loader = DataLoader(DataGenerator(val_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)
     test_loader = DataLoader(DataGenerator(test_data), batch_size=PARAM.BATCH_SIZE, shuffle=PARAM.SHUFFLE_DATA, drop_last=True)

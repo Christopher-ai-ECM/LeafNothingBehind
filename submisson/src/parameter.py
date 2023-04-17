@@ -6,6 +6,9 @@ S2_PATH = os.path.join(PATH, 's2')
 S2_01_PATH = os.path.join(PATH, 's2_01')
 MASK_PATH = os.path.join(PATH, 's2-mask')
 MASK_01_PATH = os.path.join(PATH, 's2-mask_01')
+
+TXT_PATH = os.path.join('..', 'utils')
+
 TRAIN_SPLIT = 0.8
 VAL_SPLIT = 0.1
 TEST_SPLIT = 0.1

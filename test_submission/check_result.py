@@ -1,8 +1,8 @@
 import pickle
 import numpy as np
 import torch
-import tqdm
 import os
+import matplotlib.pyplot as plt
 
 from skimage import io
 from torch import nn
@@ -110,14 +110,16 @@ def test_result(result_path, data_path):
     
     outputs = result['outputs']
     names = result['paths']
+    
     outputs = torch.from_numpy(outputs.squeeze(axis=-1))
+    print(outputs.shape)
 
     s2_path = os.path.join(data_path, 's2')
     mask_path = os.path.join(data_path, 's2-mask')
     s2 = load_tiff(names, s2_path)
     mask = load_tiff(names, mask_path)
 
-    clouds_index = [8, 9]
+    clouds_index = [8, 9, 11]
     loss = MSE(clouds_index)
     loss_value = loss(outputs, s2, mask)
     print('test loss:', loss_value)

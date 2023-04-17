@@ -2,20 +2,23 @@ import argparse
 
 from src.train import train
 from src.test import test
+from src.predict import predict
 
 
 def main(options):
     if options['mode'] == 'train':
         train()
+    if options['mode'] == 'test':
+        test()
     if options['mode'] == 'infer':
-        test(options['csv_path'], options['save_infers_under'])
+        predict(options['csv_path'], options['save_infers_under'])
     
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     # Options
-    parser.add_argument('--mode', default='infer', type=str, 
+    parser.add_argument('--mode', type=str, 
                         help="this argument will be given the value 'infer'")
 
     parser.add_argument('--csv_path', type=str, 

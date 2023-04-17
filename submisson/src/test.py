@@ -26,7 +26,7 @@ def test(csv_path, save_infers_under):
     model.eval()
 
     loader = create_predict_generateur(csv_path)
-    number_of_batches = PARAM.BATCH_SIZE if len(loader) > PARAM.BATCH_SIZE > -1 else len(loader)
+    number_of_batches = len(loader)
     results = {"outputs": [], "paths": []}
     
     for i, data in enumerate(loader):
@@ -41,8 +41,8 @@ def test(csv_path, save_infers_under):
         predict = model(X)
         result = (predict + moy)[0]
         results["outputs"].append(result.detach().cpu().numpy())
-        if i % 10 == 9 or i + 1 == number_of_batches:
-            print(f"Performed batch {i+1}/{number_of_batches}")
+        # if i % 10 == 9 or i + 1 == number_of_batches:
+        #     print(f"Performed batch {i+1}/{number_of_batches}")
 
     results["outputs"] = np.expand_dims(np.concatenate(results["outputs"], axis=0), axis=-1)
     csv_name = os.path.basename(os.path.normpath(csv_path)).split('.')[0]

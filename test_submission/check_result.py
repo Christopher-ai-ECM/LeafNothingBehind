@@ -60,6 +60,18 @@ def check_shapes(result):
         bool = False
 
     return bool
+
+
+def test_result(result_path):
+    result = read_pickle(result_path)
+    if not(check_attributes(result)) or not(check_shapes(result)) :
+        exit('erreur, le test ne va pas se lancer')
+    outputs = result['outputs']
+    paths = result['paths']
+
+    
+    
+
     
 
 if __name__ == "__main__":

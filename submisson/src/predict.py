@@ -5,9 +5,9 @@ import pickle
 import torch
 
 import src.parameter as PARAM
-
 from src.model import UNet
 from src.dataloader import create_predict_generateur
+from src.utils import de_normalize_s2
 
 
 def predict(csv_path, save_infers_under):
@@ -40,9 +40,8 @@ def predict(csv_path, save_infers_under):
         results["paths"] += list(image_name)    # add path to the s2 image name
         predict = model(X)
         result = (predict + moy)[0]
-        results["outputs"].append(result.detach().cpu().numpy())
-        # if i % 10 == 9 or i + 1 == number_of_batches:
-        #     print(f"Performed batch {i+1}/{number_of_batches}")
+        result = de_normalize_s2(result.detach().cpu().numpy())
+        results["outputs"].append(result)
 
     results["outputs"] = np.expand_dims(np.concatenate(results["outputs"], axis=0), axis=-1)
     csv_name = os.path.basename(os.path.normpath(csv_path)).split('.')[0]

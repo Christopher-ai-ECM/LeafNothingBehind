@@ -60,31 +60,38 @@ def moyenne(s2_0, s2_1, mask_0, mask_1):
     return output
 
 
-def zscore_normalize(tensor):
-    # calculer la moyenne et l'écart-type du tenseur
-    mean = tensor.mean()
-    std = tensor.std()
-
-    # normaliser le tenseur
-    tensor_normalized = (tensor - mean) / std
-
-    return tensor_normalized
+def de_normalize_s2(tensor):
+    """
+    fonction inverse de normalize_s2
+    """
+    return np.log(11) * np.exp(tensor - 1)
 
 
-def image_similarity(image1, image2):
-    # Calculer la différence entre les deux images
-    diff = image1 - image2
+# def zscore_normalize(tensor):
+#     # calculer la moyenne et l'écart-type du tenseur
+#     mean = tensor.mean()
+#     std = tensor.std()
 
-    # Calculer le carré de chaque élément de la différence
-    squared_diff = torch.pow(diff, 2)
+#     # normaliser le tenseur
+#     tensor_normalized = (tensor - mean) / std
 
-    # Calculer la moyenne des carrés
-    mse = torch.mean(squared_diff)
+#     return tensor_normalized
 
-    # Convertir la MSE en une valeur scalaire
-    mse = mse.item()
 
-    # Calculer la similarité entre les deux images
-    similarity = 1.0 / (1.0 + mse)
+# def image_similarity(image1, image2):
+#     # Calculer la différence entre les deux images
+#     diff = image1 - image2
 
-    return similarity
+#     # Calculer le carré de chaque élément de la différence
+#     squared_diff = torch.pow(diff, 2)
+
+#     # Calculer la moyenne des carrés
+#     mse = torch.mean(squared_diff)
+
+#     # Convertir la MSE en une valeur scalaire
+#     mse = mse.item()
+
+#     # Calculer la similarité entre les deux images
+#     similarity = 1.0 / (1.0 + mse)
+
+#     return similarity

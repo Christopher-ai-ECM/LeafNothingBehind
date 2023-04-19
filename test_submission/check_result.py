@@ -119,8 +119,7 @@ def test_result(result_path, data_path):
     s2 = load_tiff(names, s2_path)
     mask = load_tiff(names, mask_path)
 
-    clouds_index = [8, 9, 11]
-    loss = MSE(clouds_index)
+    loss = MSE([1, 2, 3, 6, 7, 8, 9, 11])
     loss_value = loss(outputs, s2, mask)
     print('test loss:', loss_value)
     

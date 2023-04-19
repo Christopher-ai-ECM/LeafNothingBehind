@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def find_previous(names, index):
@@ -32,7 +33,8 @@ def normalize_s2(tensor):
     on supprime les valeurs abberantes de LAI pour qu'il soit compris entre 0 et 10
     puis on comprime sa distribution avec le log puis on normalize la distribution comprimée entre 0 et 1
     """
-    return np.log(torch.clamp(tensor, 0, 10) + 1) / np.log(11) 
+    # return np.log(torch.clamp(tensor, 0, 10) + 1) / np.log(11) 
+    return np.log(torch.clamp(tensor, -0.5, 12) + 1.5) / np.log(13.5)
 
 
 def moyenne(s2_0, s2_1, mask_0, mask_1):
@@ -64,34 +66,20 @@ def de_normalize_s2(tensor):
     """
     fonction inverse de normalize_s2
     """
-    return np.log(11) * np.exp(tensor - 1)
+    # return np.exp(tensor * np.log(11)) - 1
+    return np.exp(tensor * np.log(13.5)) - 1.5
 
 
-# def zscore_normalize(tensor):
-#     # calculer la moyenne et l'écart-type du tenseur
-#     mean = tensor.mean()
-#     std = tensor.std()
-
-#     # normaliser le tenseur
-#     tensor_normalized = (tensor - mean) / std
-
-#     return tensor_normalized
+def affiche_image(X):
+    plt.imshow(X)
+    plt.show()
 
 
-# def image_similarity(image1, image2):
-#     # Calculer la différence entre les deux images
-#     diff = image1 - image2
-
-#     # Calculer le carré de chaque élément de la différence
-#     squared_diff = torch.pow(diff, 2)
-
-#     # Calculer la moyenne des carrés
-#     mse = torch.mean(squared_diff)
-
-#     # Convertir la MSE en une valeur scalaire
-#     mse = mse.item()
-
-#     # Calculer la similarité entre les deux images
-#     similarity = 1.0 / (1.0 + mse)
-
-#     return similarity
+def compte_clamp(tensor):
+    compte = 0
+    l = tensor.flatten()
+    for x in l:
+        if x < -1 or x > 10:
+            print(x)
+            compte += 1
+    return compte

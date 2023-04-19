@@ -5,7 +5,7 @@ from skimage import io
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-from src.utils import find_previous, normalize_s1, normalize_s2, moyenne
+from src.utils import find_previous, normalize_s1, normalize_s2, moyenne, compte_clamp
 import src.parameter as PARAM
 
 np.random.seed(0)
@@ -55,6 +55,9 @@ class DataGenerator(Dataset):
         s2_0 = load_image(s2_0_path)
         s2_1 = load_image(s2_1_path)
         s2_2 = load_image(s2_2_path)
+        # clamp = compte_clamp(s2_2)
+        # if clamp != 0:
+        #   print(f'{clamp = }')
 
         moy = normalize_s2(torch.tensor(moyenne(s2_0, s2_1, mask_0, mask_1))).unsqueeze(0)
         s1 = normalize_s1(s1.clone().detach()) 

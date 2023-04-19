@@ -157,7 +157,7 @@ def create_generators():
 
 def read_csv(csv_path):
     with open(csv_path) as path_list:
-      data_paths = [[os.path.basename(path) for path in row] for row in csv.reader(path_list, delimiter=",")]
+      data_paths = [[os.path.basename(path) for path in row] for row in csv.reader(path_list, delimiter=",")][1:]
     return data_paths
 
 

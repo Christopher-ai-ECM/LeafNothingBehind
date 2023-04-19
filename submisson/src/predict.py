@@ -19,7 +19,7 @@ def predict(csv_path, save_infers_under):
 
     model = UNet(input_channels=3, output_classes=1, hidden_channels=PARAM.HIDDEN_CHANNELS, dropout_probability=PARAM.DROPOUT)
     model.to(device)
-    checkpoint_path = os.path.join('checkpoint', 'poids_uent.pth')
+    checkpoint_path = os.path.join('checkpoint', 'poids_unet_bis.pth')
     checkpoint = torch.load(checkpoint_path, map_location=device)
     model.load_state_dict(checkpoint)
 

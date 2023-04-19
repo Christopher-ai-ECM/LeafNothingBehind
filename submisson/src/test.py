@@ -28,10 +28,12 @@ def test():
     model = UNet(input_channels=3, output_classes=1, hidden_channels=PARAM.HIDDEN_CHANNELS, dropout_probability=PARAM.DROPOUT)
 
     model.to(device)
-    # summary(model, input_size=(3, 256, 256))
+    checkpoint_path = os.path.join('checkpoint', 'poids_unet_bis.pth')
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    model.load_state_dict(checkpoint)
 
     # Loss
-    criterion = MSE([8, 9, 11]) #on rajoute la neige aussi
+    criterion = MSE([1, 2, 3, 6, 7, 8, 9, 11])
 
     ###############################################################
     # Start Evaluation                                            #

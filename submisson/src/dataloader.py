@@ -57,15 +57,16 @@ class DataGenerator(Dataset):
         s2_2 = load_image(s2_2_path)
 
         moy = normalize_s2(torch.tensor(moyenne(s2_0, s2_1, mask_0, mask_1))).unsqueeze(0)
-        s1=normalize_s1(s1.clone().detach()) 
-        s2_2=normalize_s2(s2_2.clone().detach().unsqueeze(0)) 
-        s2_1=normalize_s2(s2_1.clone().detach().unsqueeze(0)) 
-        difference=s2_2-moy
+        s1 = normalize_s1(s1.clone().detach()) 
+        s2_2 = normalize_s2(s2_2.clone().detach().unsqueeze(0)) 
+        s2_1 = normalize_s2(s2_1.clone().detach().unsqueeze(0)) 
+        # difference = s2_2 - moy
 
         merged_tensor = torch.cat((moy, s1), dim=0)
         
         X = merged_tensor #shape(3,256,256)
-        Y = torch.cat((difference,mask_2.unsqueeze(0)),dim=0) #s2_2 avant 
+        # Y = torch.cat((difference, mask_2.unsqueeze(0)),dim=0) #s2_2 avant 
+        Y = torch.cat((s2_2, mask_2.unsqueeze(0)),dim=0) #s2_2 avant 
         return X, Y
 
 
@@ -114,16 +115,16 @@ class Predict_DataGenerator(Dataset):
         s1=normalize_s1(s1.clone().detach()) 
         # s2_2=normalize_s2(s2_2.clone().detach().unsqueeze(0)) 
         s2_1=normalize_s2(s2_1.clone().detach().unsqueeze(0)) 
-        # difference=s2_2-moy
+        # difference = s2_2 - moy
 
         merged_tensor = torch.cat((moy, s1), dim=0)
         #print("shape_mask: ", np.shape(mask_1))
         
         X = merged_tensor #shape(3,256,256)
         # Y = torch.cat((difference, mask_2.unsqueeze(0)),dim=0) #s2_2 avant 
-        Y = moy
+
         s2_name = self.names[index][-1]
-        return X, Y, s2_name
+        return X, s2_name
 
 
 # def data_split(names):
@@ -156,7 +157,7 @@ def create_generators():
 
 def read_csv(csv_path):
     with open(csv_path) as path_list:
-      data_paths = [[os.path.basename(path) for path in row] for row in csv.reader(path_list, delimiter=",")][1:]
+      data_paths = [[os.path.basename(path) for path in row] for row in csv.reader(path_list, delimiter=",")]
     return data_paths
 
 
@@ -174,11 +175,12 @@ def load_image(path):
     return torch.from_numpy(image)
 
 
-if __name__ == "__main__":
-    train, _, _ = create_generators()
-    X, Y = next(iter(train))
-    print(X.shape)
+def check():
+  _, _, test = create_generators()
+  X1, _ = next(iter(test))
+    
+  pred = create_predict_generateur('..\\data\\test_csv.csv')
+  X2 = next(iter(pred))
 
-    # pred = create_predict_generateur('..\\test_submission\\data\\test_data.csv')
-    # X, Y = next(iter(pred))
-    # print(X)
+  print(X1[0])
+  print(X2)

@@ -3,6 +3,7 @@ import argparse
 from src.train import train
 from src.test import test
 from src.predict import predict
+from src.dataloader import check
 
 
 def main(options):
@@ -12,7 +13,9 @@ def main(options):
         test()
     if options['mode'] == 'infer':
         predict(options['csv_path'], options['save_infers_under'])
-    
+    if options['mode'] == 'data':
+        check()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

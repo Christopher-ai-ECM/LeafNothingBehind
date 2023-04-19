@@ -31,10 +31,7 @@ def train():
     # summary(model, input_size=(3, 256, 256))
 
     # Loss
-    criterion = MSE([8, 9, 11]) #on rajoute la neige aussi
-    #criterion = nn.MSELoss()
-    # Loss
-    #criterion = nn.SmoothL1Loss() #on utilise la SmoothL1Loss qui est comme mean-squarred error mais en mieux
+    criterion = MSE([1, 2, 3, 6, 7, 8, 9, 11]) #on rajoute la neige aussi
 
     # Optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=PARAM.LEARNING_RATE)

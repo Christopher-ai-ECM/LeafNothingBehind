@@ -19,7 +19,7 @@ def predict(csv_path, save_infers_under):
 
     model = UNet(input_channels=3, output_classes=1, hidden_channels=PARAM.HIDDEN_CHANNELS, dropout_probability=PARAM.DROPOUT)
     model.to(device)
-    checkpoint_path = os.path.join('checkpoint', 'UNET_50.pth')
+    checkpoint_path = os.path.join('checkpoint', 'poids_uent.pth')
     checkpoint = torch.load(checkpoint_path, map_location=device)
     model.load_state_dict(checkpoint)
 
@@ -33,14 +33,14 @@ def predict(csv_path, save_infers_under):
         if i == number_of_batches:
             break
         
-        X, moy, image_name = data
+        X, image_name = data
         X = X.to(torch.float).to(device)
-        moy = moy.to(torch.float).to(device)
+        # moy = moy.to(torch.float).to(device)
         # results["paths"] += list(data["paths"][-1])
         results["paths"] += list(image_name)    # add path to the s2 image name
         predict = model(X)
-        result = (predict + moy)[0]
-        result = de_normalize_s2(result.detach().cpu().numpy())
+        # result = (predict + moy)[0]
+        result = de_normalize_s2(predict[0].detach().cpu().numpy())
         results["outputs"].append(result)
 
     results["outputs"] = np.expand_dims(np.concatenate(results["outputs"], axis=0), axis=-1)

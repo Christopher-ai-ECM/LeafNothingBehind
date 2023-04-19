@@ -43,7 +43,7 @@ def moyenne(s2_0, s2_1, mask_0, mask_1):
                                on fait la moyenne s'il des nuages dans les 2 photos
     renvoie le résultat dans une matrice numpy de taille (256, 256)
     """
-    nuage_indice = [8, 9]
+    nuage_indice = [1, 3, 4, 8, 9, 10, 11]
     
     # Check if any pixel in both masks is a cloud
     both_clouds = (np.isin(mask_0, nuage_indice)) & (np.isin(mask_1, nuage_indice))
